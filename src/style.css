@@ -1,0 +1,47 @@
+* {
+	/* border: 1px solid red; */
+}
+
+body {
+	text-align: center;
+}
+
+.board {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 15%;
+	margin: 25px;
+}
+
+.grid {
+	width: 65%;
+	
+}
+
+.row {
+	display: flex;
+}
+
+
+.square {
+	flex-basis: 100%;
+	border: 1px solid black;
+}
+
+.square::after {
+	display: block;
+	content: '';
+	padding-bottom: 100%;	
+} 
+
+/* 
+	width: 5%;
+	border: 1px solid black;
+}
+
+.square::after {
+	display: block;
+	content: '';
+	padding-bottom: 100%;	
+} */
