@@ -8,6 +8,7 @@ const randomColorButton = document.querySelector('.randomColorButton');
 
 let gridSize = 16;			// Default grid size = 16
 let gridColor = 'black';	// Default grid color is black
+let colorButtons = {'black': blackButton, 'darkening': darkeningButton, 'randomColor': randomColorButton};
 
 const grey = ['#ffffff', '#f5f7ff', '#e6e9f3', 
 			'#d8dbe7', '#bcc0cf', '#a1a5b6', 
@@ -20,22 +21,39 @@ for(let i = 0; i < grey.length; i++) {
 }
 
 makeGrid(gridSize);
+updateButtonColor(colorButtons, gridColor);
 
 changeGridSizeButton.addEventListener('click', () => {
 	gridSize = prompt('Change grid size (1~100) (Default: 16)');
-	
+	if (gridSize === null) {
+		gridSize = 16;
+	}
+	else if (gridSize < 1 || gridSize > 100) {
+		alert("Wrong answer!");
+		gridSize = 16;
+	}
+	removeGrid(grid);
+	makeGrid(gridSize);
+});
+
+clearGridButton.addEventListener('click', ()=>{
+	removeGrid(grid);
+	makeGrid(gridSize);
 });
 
 blackButton.addEventListener('click', () => {
 	gridColor = 'black';
+	updateButtonColor(colorButtons, gridColor);
 });
 
 darkeningButton.addEventListener('click', () => {
 	gridColor = 'darkening';
+	updateButtonColor(colorButtons, gridColor);
 });
 
 randomColorButton.addEventListener('click', () => {
 	gridColor = 'randomColor';
+	updateButtonColor(colorButtons, gridColor);
 });
 
 function hexToRgb(hex) {
@@ -50,7 +68,7 @@ function hexToRgb(hex) {
 function setColor(gridColor, currentColor) {
 	console.log(currentColor);
 	if (gridColor === 'black') {
-		return gridColor;
+		return hexToRgb('#000000');
 	}
 	else if (gridColor === 'randomColor') {
 		let red = Math.random() * 255;
@@ -86,4 +104,38 @@ function makeGrid(gridSize) {
 		}
 		grid.appendChild(row);
 	}
+}
+
+function removeGrid(grid) {
+	grid.textContent = "";
+}
+
+function updateButtonColor(colorButtons, gridColor) {
+	for(color in colorButtons) {
+		colorButtons[color].style.removeProperty("background");
+		colorButtons[color].style.removeProperty("color");
+	}
+	console.log(colorButtons[gridColor]);
+	colorButtons[gridColor].style.background = "black";
+	colorButtons[gridColor].style.color = "white";
+
+	// for (let i = 0; i < colorButton.length(); i++) {
+	// 	colorButtons[i]
+	// }
+	
+	// blackButton.style.removeProperty("background");
+	// .style.removeProperty("background");
+	// if (gridColor === 'black') {
+	// 	blackButton.style.background = "black";
+	// 	blackButton.style.color = "white";
+	// }
+	// else if (gridColor === 'darkening') {
+	// 	darkeningButton.style.background = "black";
+	// 	darkeningButton.style.color = "white";
+	// }
+	// else {
+	// 	randomColorButton.style.background = "black";
+	// 	randomColorButton.style.color = "white";
+	// }
+	
 }
